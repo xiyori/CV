@@ -1,0 +1,12 @@
+name: recompile-cv-pdf
+on: [push]
+jobs:
+  run_docker_job:
+    runs-on: ubuntu-latest
+    name: A job to run docker
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Run docker action step
+      uses: ./
+      id: rundocker
