@@ -15,9 +15,9 @@
 \linespread{1.15}
 \geometry{a4paper,
     left={0.5in},
-    top={0.4in}, 
+    top={0.3in}, 
     right={0.5in},
-    bottom={0.4in}
+    bottom={0.3in}
 }
 \newcommand\clink[1]{{\usefont{T1}{lmtt}{m}{n} #1 }}
 \pagenumbering{gobble}

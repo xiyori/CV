@@ -1,4 +1,5 @@
 \documentclass{resume}
+\renewcommand{\baselinestretch}{1.1} 
 
 \begin{document}
 
@@ -22,17 +23,23 @@
     \includegraphics[width=2.8cm]{images/gr.jpg}
 }
 \end{tabularx}
+%\vspace*{-1.5em}
 \begin{center}
 \begin{tabularx}{\linewidth}{@{}*{2}{X}@{}}
 % left side %
 {
     \csection{EXPERIENCE}{\small
         \begin{itemize}
-            \item \frcontent{Huawei}{Assistant Engineer @ Noah’s Ark lab\vspace{0.2em}}{-- Remastered TV-series using GANs;\newline
-            -- Developed non-linear CNN degradation model for super-resolution of real-world images.}{November 2020 -- September 2021}
-            \item \frcontent{HSE University}{Intern-researcher @ Institute of Artificial Intelligence (LAMBDA)}{-- Deep learning applications for online filtering and reconstruction of aerogel detectors;\newline 
-            \href{http://doi.org/10.1134/S106377882305037X}{What Machine Learning Can Do for Focusing Aerogel Detectors, Physics of Atomic Nuclei 86, 864 (2023)}}{November 2021 onwards}
-            \item \frcontent{HSE University}{Teaching Assistant @ Faculty of Computer Science}{Teaching Instructor @ Deep Learning 1}{2020 -- 2024, September 2023 onwards}
+            \item \frcontent{HSE University}{Intern-researcher @ LAMBDA}{-- Deep learning applications for online filtering and reconstruction of aerogel detectors;\newline 
+                \href{http://doi.org/10.1134/S106377882305037X}{What Machine Learning Can Do for Focusing Aerogel Detectors, Physics of Atomic Nuclei 86, 864 (2023)}\newline
+                ``Machine Learning for FARICH Reconstruction at NICA SPD'' accepted in MSU Physics Bulletin (2024)}{November 2021 onwards}
+            \item \frcontent{HSE University}{Lecturer @ Deep Learning 1}{Course Instructor @ Deep Learning 1\newline
+                Teaching Assistant @ Faculty of Computer Science}{2024 onwards, 2023 onwards, 2020 -- 2024}
+            \item \frcontent{Sber}{Manager @ Anti-Fraud Department}{-- Developed an anti-fraud AI solution (joint with HSE)}{August 2024 -- December 2024}
+            \item \frcontent{Sber}{Intern @ Sber AI Lab}{-- Applied Temporal Point Process models to MIMIC-IV medical dataset.}{March 2024 -- August 2024}
+                %``HoTPP Benchmark: Are We Good at the Long Horizon Events Forecasting?'' under review in KDD 2025
+            \item \frcontent{Huawei}{Assistant Engineer @ Noah’s Ark lab}{-- Remastered TV-series using GANs;\newline
+                -- Developed non-linear CNN degradation model for super-resolution of real-world images.}{November 2020 -- September 2021}
         \end{itemize}
     }
     \csection{EDUCATION}{\small
@@ -40,14 +47,6 @@
             \item \frcontent{MSc Data Science (Studied in English)}{HSE University, Skoltech (MML joint programme)}{}{Currently undergoing}
             \item \frcontent{MSc + PhD Track, Computer Science}{HSE University}{}{Currently undergoing}
             \item \frcontent{BS Computer Science}{HSE University}{}{2023, Academic Honors Diploma}
-        \end{itemize}
-    }
-    \csection{PROJECTS}{\small
-        \begin{itemize}
-            \item \frcontent{HiFi-GAN \clink{\href{https://github.com/xiyori/hw4_nv}{[github.com]}}}{Implementation of HiFi-GAN NeurIPS 2020 paper}{}{PyTorch}
-            \item \frcontent{secHNet \clink{\href{https://github.com/xiyori/secHNet}{[github.com]}}}{PyTorch in Haskell from scratch}{}{Haskell, C}
-            % \item \frcontent{Visual Turing \clink{\href{https://github.com/xiyori/turing_machine_emulator}{[github.com]}}}{Turing machine IDE in \textit{C++}}{}{}
-            \vspace*{-3em}
         \end{itemize}
     }
 } 
@@ -58,21 +57,21 @@
     \csection{SKILLS}{\small
         \begin{itemize}
             \item \textbf{ML \& Data Analysis} \newline
-            {\footnotesize -- Computer vision, super-resolution, GANs, diffusion models, LLMs, deep learning for audio, deep Bayesian learning, mode connectivity \& permutation invariance\newline
-            -- PyTorch, scikit-learn, OpenCV, NumPy, JAX, PySpark, Hadoop, Vowpal Wabbit}
-            \item \textbf{Languages} \newline
+            {\footnotesize -- Computer vision, super-resolution, GANs, diffusion models, RNNs, transformers, deep learning for audio, deep Bayesian learning, mode connectivity\newline
+            -- PyTorch, scikit-learn, OpenCV, NumPy, JAX, Polars, PySpark, Hadoop, Vowpal Wabbit}
+            \item \textbf{Languages \& Frameworks} \newline
             {\footnotesize Python, C, C++, C\#, Haskell, x86/ARM Assembly, HTML/CSS, ReactJS, Lua}
             \item \textbf{CI/CD \& Other} \newline
-            {\footnotesize Docker, WandB, GitHub Actions, QuickCheck, GDB, Arch Linux, Shell}
+            {\footnotesize Docker, WandB, Hydra, GitHub Actions, QuickCheck, GDB, Arch Linux, Shell}
         \end{itemize}
     }
 	\csection{AWARDS \& RECOGNITION}{\small
 		\begin{itemize}
-            \item \frcontent{Yandex Scholarship}{HSE University}{Laureate}{2022}
+            \item \frcontent{Yandex Scholarship}{HSE University}{}{2022}
 			\item \frcontent{Vysshaya Liga, Math \& Informatics}{HSE University}{Degree I \& III Diploma}{2021, 2022}
 			\item \frcontent{Ya Professional, Math Olympiad}{Yandex}{Prize-winner}{2021, 2022}
 			% \item \frcontent{``Pokori Vorob'yovi Gori'' Math Olympiad}{Moscow State University}{Winner}{2019}
-			\item \frcontent{Phystech, Math \& Physics Olympiads}{Moscow Institute of Physics and Technology}{Winner}{2019}
+			%\item \frcontent{Phystech, Math \& Physics Olympiads}{Moscow Institute of Physics and Technology}{Winner}{2019}
 		\end{itemize}
 	}
     %\csection{OTHER HIGHLIGHTS}{\small
@@ -80,6 +79,14 @@
     %        \item {\footnotesize Conducted biology studies within \textit{Structural and Functional Research of G-protein-coupled Cell Surface Receptors Using 3D Modeling} school project.}
     %    \end{itemize}
     %}
+    \csection{PROJECTS}{\small
+    \begin{itemize}
+        \item \frcontent{HiFi-GAN \clink{\href{https://github.com/xiyori/hw4_nv}{[github.com]}}}{Implementation of HiFi-GAN NeurIPS 2020 paper}{}{PyTorch}
+        \item \frcontent{secHNet \clink{\href{https://github.com/xiyori/secHNet}{[github.com]}}}{PyTorch in Haskell from scratch}{}{Haskell, C}
+        % \item \frcontent{Visual Turing \clink{\href{https://github.com/xiyori/turing_machine_emulator}{[github.com]}}}{Turing machine IDE in \textit{C++}}{}{}
+        %\vspace*{-3em}
+    \end{itemize}
+    }
     \csection{HOBBIES \& INTERESTS}{\small
         \vspace{0.32cm}
         \begin{tabularx}{\linewidth}{@{}*{4}{>{\centering\arraybackslash}X}@{}}
