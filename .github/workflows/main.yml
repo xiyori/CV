@@ -42,11 +42,12 @@ jobs:
           cls_path = root / "CV" / "resume.cls"
           out_tex = root / "public" / "cv" / "main.cleaned.tex"
           out_title = root / "public" / "cv" / "title.txt"
+          COMMAND_ARITY = {"csection": 2, "frcontent": 4, "clink": 1}
 
           source = tex_path.read_text(encoding="utf-8")
           cls_source = cls_path.read_text(encoding="utf-8")
 
-          if not all(token in cls_source for token in ("csection", "frcontent", "clink")):
+          if not all(token in cls_source for token in COMMAND_ARITY):
               raise RuntimeError("resume.cls must define csection/frcontent/clink")
 
           title_match = re.search(r"\\Large\{([^{}]+)\}", source)
@@ -75,7 +76,7 @@ jobs:
               while i < len(text):
                   ch = text[i]
                   if ch == "\\":
-                      i += 2
+                      i += 2 if i + 1 < len(text) else 1
                       continue
                   if ch == "{":
                       depth += 1
@@ -133,9 +134,9 @@ jobs:
                   parts.append(f"\\textit{{{fourth}}}")
               return " \\\\\n".join(parts) + "\n\n"
 
-          source = expand_command(source, "csection", 2, render_csection)
-          source = expand_command(source, "frcontent", 4, render_frcontent)
-          source = expand_command(source, "clink", 1, lambda a: a[0])
+          source = expand_command(source, "csection", COMMAND_ARITY["csection"], render_csection)
+          source = expand_command(source, "frcontent", COMMAND_ARITY["frcontent"], render_frcontent)
+          source = expand_command(source, "clink", COMMAND_ARITY["clink"], lambda a: a[0])
 
           source = re.sub(r"\\vspace\*?\{[^}]*\}", "", source)
           source = re.sub(r"\\includegraphics(?:\[[^]]*\])?\{[^}]*\}", "", source)
