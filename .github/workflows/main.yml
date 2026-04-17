@@ -52,12 +52,8 @@ jobs:
           source = source.replace("\\fontfamily{ppl}\\selectfont", "")
           source = source.replace("\\noindent", "")
 
-          source = re.sub(
-              r"\\begin\{tabularx\}\{[^}]*\}\{[^}]*\}",
-              "",
-              source,
-          )
-          source = source.replace("\\end{tabularx}", "")
+          source = re.sub(r"^.*\\begin\{tabularx\}.*$\n?", "", source, flags=re.MULTILINE)
+          source = re.sub(r"^.*\\end\{tabularx\}.*$\n?", "", source, flags=re.MULTILINE)
           source = source.replace("\\begin{center}", "")
           source = source.replace("\\end{center}", "")
           source = source.replace("&", "\n")
