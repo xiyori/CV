@@ -41,9 +41,16 @@ jobs:
           tex_path = root / "CV" / "main.tex"
           cls_path = root / "CV" / "resume.cls"
           out_tex = root / "public" / "cv" / "main.cleaned.tex"
+          out_title = root / "public" / "cv" / "title.txt"
 
           source = tex_path.read_text(encoding="utf-8")
-          _ = cls_path.read_text(encoding="utf-8")
+          cls_source = cls_path.read_text(encoding="utf-8")
+
+          if not all(token in cls_source for token in ("csection", "frcontent", "clink")):
+              raise RuntimeError("resume.cls must define csection/frcontent/clink")
+
+          title_match = re.search(r"\\Large\{([^{}]+)\}", source)
+          page_title = (title_match.group(1).strip() + " CV") if title_match else "CV"
 
           if "\\begin{document}" in source and "\\end{document}" in source:
               source = source.split("\\begin{document}", 1)[1]
@@ -67,6 +74,9 @@ jobs:
               start = i
               while i < len(text):
                   ch = text[i]
+                  if ch == "\\":
+                      i += 2
+                      continue
                   if ch == "{":
                       depth += 1
                   elif ch == "}":
@@ -142,13 +152,15 @@ jobs:
               + "\n\n\\end{document}\n"
           )
           out_tex.write_text(cleaned, encoding="utf-8")
+          out_title.write_text(page_title, encoding="utf-8")
           PY
 
+          PAGE_TITLE="$(cat public/cv/title.txt)"
           pandoc public/cv/main.cleaned.tex \
             --from=latex \
             --to=html5 \
             --standalone \
-            --metadata title="Foma Shipilov CV" \
+            --metadata title="$PAGE_TITLE" \
             --output=public/cv/index.html
 
       - name: Upload Pages artifact
