@@ -1,9 +1,10 @@
 % !TeX spellcheck = ru_RU
 \documentclass{resume}
+\renewcommand{\baselinestretch}{1.1}
 
 \begin{document}
 
-%\fontfamily{ppl}\selectfont
+\fontfamily{ppl}\selectfont
 
 \noindent
 \begin{tabularx}{\linewidth}{@{}m{0.8\textwidth} m{0.2\textwidth}@{}}
@@ -23,32 +24,31 @@
     \includegraphics[width=2.8cm]{images/gr.jpg}
 }
 \end{tabularx}
+%\vspace*{-1.0em}
 \begin{center}
 \begin{tabularx}{\linewidth}{@{}*{2}{X}@{}}
 % left side %
 {
     \csection{ОПЫТ РАБОТЫ}{\small
         \begin{itemize}
+            \item \frcontent{ВШЭ}{Стажер-исследователь, ЛЯМБДА\newline
+                Преподаватель, Департамент больших данных и информационного поиска}{-- Применение машинного обучения для быстрой реконструкции и симуляции аэрогелевых детекторов\newline 
+                \href{http://doi.org/10.1134/S106377882305037X}{What Machine Learning Can Do for Focusing Aerogel Detectors, Physics of Atomic Nuclei 86, 864 (2023)}\newline
+                \href{https://doi.org/10.3103/S0027134924702369}{Machine Learning for FARICH Reconstruction at NICA SPD, MSU Physics Bulletin 79 S2, 906 (2024)}\newline
+                -- Учебные курсы: Глубинное обучение 1, Введение в глубинное обучение}{С ноября 2021}
+            \item \frcontent{Сбер}{Менеджер, Деп. противодействия мошенничеству\newline
+                Стажер, Сбер ИИ}{-- Разработка ИИ модели анти-фрод (совм. с ВШЭ)\newline
+                -- Бенчмаркинг точечных временных процессов на датасете MIMIC-IV\newline
+                \href{https://doi.org/10.1016/j.neucom.2026.132771}{HoTPP benchmark: Are we good at the long horizon events forecasting?, Neurocomputing 672, 132771 (2026)}}{Март 2024 -- Декабрь 2024}
             \item \frcontent{Huawei}{Ассистент-инженер, Noah’s Ark lab\vspace{0.2em}}{-- Улучшение качества аниме с помощью ГАНов;\newline
-            -- Разработка нелинейной сверточной модели деградации реальных изображений.}{Ноябрь 2020 -- Сентябрь 2021}
-            \item \frcontent{ВШЭ}{Стажер-исследователь, Институт Искусственного Интеллекта (LAMBDA)}{-- Применение машинного обучения для быстрой реконструкции и симуляции аэрогелевых детекторов.\newline 
-            \href{http://doi.org/10.1134/S106377882305037X}{What Machine Learning Can Do for Focusing Aerogel Detectors, Physics of Atomic Nuclei 86, 864 (2023)}}{С ноября 2021}
-            \item \frcontent{ВШЭ}{Учебный ассистент, Факультет компьютерных наук}{Семинарист по Глубинному обучению 1}{2020 -- 2024, С сентября 2023}
+                -- Разработка нелинейной сверточной модели деградации реальных изображений.}{Ноябрь 2020 -- Сентябрь 2021}
         \end{itemize}
     }
     \csection{ОБРАЗОВАНИЕ}{\small
         \begin{itemize}
-            \item \frcontent{Магистратура Data Science (англ.)}{ВШЭ, Сколтех (Программа двух дипломов MML)}{}{Студент}
-            \item \frcontent{Трек магистратура-аспирантура}{ВШЭ}{}{Студент}
-            \item \frcontent{Бакалавр 01.03.02 ПМИ}{ВШЭ}{}{2023, Диплом с отличием}
-        \end{itemize}
-    }
-    \csection{ПРОЕКТЫ}{\small
-        \begin{itemize}
-            \item \frcontent{HiFi-GAN \clink{\href{https://github.com/xiyori/hw4_nv}{[github.com]}}}{Реализация модели HiFi-GAN из NeurIPS 2020}{}{PyTorch}
-            \item \frcontent{secHNet \clink{\href{https://github.com/xiyori/secHNet}{[github.com]}}}{PyTorch на Haskell с нуля}{}{Haskell, C}
-            % \item \frcontent{Visual Turing \clink{\href{https://github.com/xiyori/turing_machine_emulator}{[github.com]}}}{Turing machine IDE in \textit{C++}}{}{}
-            \vspace*{-3em}
+            \item \frcontent{Аспирантура, Комьютерные науки, Академический трек}{ВШЭ}{}{Аспирант}
+            \item \frcontent{Магистратура ПМИ, МиКН}{ВШЭ, Сколтех (обучение на англ.)}{}{2025, Диплом с отличием}
+            \item \frcontent{Бакалавриат ПМИ}{ВШЭ}{}{2023, Диплом с отличием}
         \end{itemize}
     }
 } 
@@ -59,22 +59,29 @@
     \csection{НАВЫКИ}{\small
         \begin{itemize}
             \item \textbf{Машинное обучение, анализ данных} \newline
-            {\footnotesize -- Компьютерное зрение, сверх-разрешение, ГАНы, диффузионные модели, LLM, глубинное обучение в звуке, байесовские методы, линейная связность нейросетей\newline
-            -- PyTorch, scikit-learn, OpenCV, NumPy, JAX, PySpark, Hadoop, Vowpal Wabbit}
+            {\footnotesize -- Компьютерное зрение, сверх-разрешение, ГАНы, диффузионные модели, глубинное обучение в звуке, байесовские методы, линейная связность нейросетей\newline
+                -- PyTorch, scikit-learn, OpenCV, NumPy, JAX, Polars, PySpark, Hadoop, Vowpal Wabbit}
             \item \textbf{Программирование} \newline
-            {\footnotesize Python, C, C++, C\#, Haskell, x86/ARM Assembly, HTML/CSS, ReactJS, Lua}
+            {\footnotesize Python, C, C++, C\#, Haskell, x86/ARM Assembly, HTML/CSS/JS, ReactJS, Lua}
             \item \textbf{CI/CD, другое} \newline
-            {\footnotesize Docker, WandB, GitHub Actions, QuickCheck, GDB, Arch Linux, Shell}
+            {\footnotesize Docker, WandB, Hydra, GitHub Actions, QuickCheck, GDB, Arch Linux, Shell, ZFS}
         \end{itemize}
     }
 	\csection{НАГРАДЫ}{\small
 		\begin{itemize}
-            \item \frcontent{Стипендия Яндекса}{ВШЭ}{Лауреат}{2022}
+            \item \frcontent{Стипендия Яндекса}{ВШЭ}{}{2022}
 			\item \frcontent{Высшая лига, ПМИ}{ВШЭ}{Дипломы I и III степени}{2021, 2022}
 			\item \frcontent{Я профессионал, математика}{Яндекс}{Призер}{2021, 2022}
-			\item \frcontent{Физтех, математика, физика}{МФТИ}{Победитель}{2019}
+			%\item \frcontent{Физтех, математика, физика}{МФТИ}{Победитель}{2019}
 		\end{itemize}
 	}
+    \csection{ПРОЕКТЫ}{\small
+        \begin{itemize}
+            \item \frcontent{mars-reproducibility \clink{\href{https://github.com/xiyori/mars-reproducibility}{[github.com]}}}{Воспроизведение статьи MARS (2023)}{}{PyTorch}
+            \item \frcontent{secHNet \clink{\href{https://github.com/xiyori/secHNet}{[github.com]}}}{PyTorch на Haskell с нуля}{}{Haskell, C}
+            % \item \frcontent{Visual Turing \clink{\href{https://github.com/xiyori/turing_machine_emulator}{[github.com]}}}{Turing machine IDE in \textit{C++}}{}{}
+        \end{itemize}
+    }
     %\csection{OTHER HIGHLIGHTS}{\small
     %    \begin{itemize}
     %        \item {\footnotesize Conducted biology studies within \textit{Structural and Functional Research of G-protein-coupled Cell Surface Receptors Using 3D Modeling} school project.}
@@ -87,15 +94,15 @@
                 \includegraphics[width=0.8cm]{images/skiing.png}
             } &
             {\centering
-                \includegraphics[width=0.8cm]{images/music.png}
+                \includegraphics[width=0.8cm]{images/hyperspeedcube.png}
             } & 
             {\centering
-                \includegraphics[width=0.8cm]{images/hyperspeedcube.png}
+                \includegraphics[width=0.8cm]{images/homelab.png}
             } &
             {\centering
-                \includegraphics[width=0.8cm]{images/switch.png}
+                \includegraphics[width=0.8cm]{images/headphones.png}
             } \\
-            {\footnotesize Горные лыжи} & {\footnotesize Музыка} & {\footnotesize Гиперкубинг} & {\footnotesize Кастомные клавиатуры}
+            {\footnotesize Горные лыжи} & {\footnotesize Гиперкубинг} & {\footnotesize Селф-хостинг} & {\footnotesize Аудио измерения}
         \end{tabularx}
     }
 }
