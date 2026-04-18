@@ -1,6 +1,0 @@
-# action.yml
-name: 'Recompile CV'
-description: 'Check tex file compilation'
-runs:
-  using: 'docker'
-  image: 'Dockerfile'

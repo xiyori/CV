@@ -1,12 +1,181 @@
-name: recompile-cv-pdf
-on: [push]
+name: build-and-deploy-cv-web
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
-  run_docker_job:
+  build:
     runs-on: ubuntu-latest
-    name: A job to run docker
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Run docker action step
-      uses: ./
-      id: rundocker
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install pandoc and python
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc python3
+
+      - name: Convert TeX CV to HTML with pandoc
+        run: |
+          mkdir -p public/cv
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          root = Path(".")
+          tex_path = root / "CV" / "main.tex"
+          cls_path = root / "CV" / "resume.cls"
+          out_tex = root / "public" / "cv" / "main.cleaned.tex"
+          out_title = root / "public" / "cv" / "title.txt"
+          COMMAND_ARITY = {"csection": 2, "frcontent": 4, "clink": 1}
+
+          source = tex_path.read_text(encoding="utf-8")
+          cls_source = cls_path.read_text(encoding="utf-8")
+
+          if not all(token in cls_source for token in COMMAND_ARITY):
+              raise RuntimeError("resume.cls must define csection/frcontent/clink")
+
+          title_match = re.search(r"\\Large\{([^{}]+)\}", source)
+          page_title = (title_match.group(1).strip() + " CV") if title_match else "CV"
+
+          if "\\begin{document}" in source and "\\end{document}" in source:
+              source = source.split("\\begin{document}", 1)[1]
+              source = source.rsplit("\\end{document}", 1)[0]
+
+          source = source.replace("\\fontfamily{ppl}\\selectfont", "")
+          source = source.replace("\\noindent", "")
+
+          source = re.sub(r"^.*\\begin\{tabularx\}.*$\n?", "", source, flags=re.MULTILINE)
+          source = re.sub(r"^.*\\end\{tabularx\}.*$\n?", "", source, flags=re.MULTILINE)
+          source = source.replace("\\begin{center}", "")
+          source = source.replace("\\end{center}", "")
+          source = source.replace("&", "\n")
+          source = source.replace("\\\\", "\n")
+
+          def parse_braced(text: str, i: int):
+              if i >= len(text) or text[i] != "{":
+                  return "", i
+              i += 1
+              depth = 1
+              start = i
+              while i < len(text):
+                  ch = text[i]
+                  if ch == "\\":
+                      i += 2 if i + 1 < len(text) else 1
+                      continue
+                  if ch == "{":
+                      depth += 1
+                  elif ch == "}":
+                      depth -= 1
+                      if depth == 0:
+                          return text[start:i], i + 1
+                  i += 1
+              return text[start:], len(text)
+
+          def expand_command(text: str, command: str, nargs: int, renderer):
+              out = []
+              i = 0
+              token = "\\" + command
+              n = len(text)
+              while i < n:
+                  j = text.find(token, i)
+                  if j < 0:
+                      out.append(text[i:])
+                      break
+                  out.append(text[i:j])
+                  k = j + len(token)
+                  while k < n and text[k].isspace():
+                      k += 1
+                  args = []
+                  ok = True
+                  for _ in range(nargs):
+                      while k < n and text[k].isspace():
+                          k += 1
+                      if k >= n or text[k] != "{":
+                          ok = False
+                          break
+                      arg, k = parse_braced(text, k)
+                      args.append(arg.strip())
+                  if ok:
+                      out.append(renderer(args))
+                      i = k
+                  else:
+                      out.append(token)
+                      i = j + len(token)
+              return "".join(out)
+
+          def render_csection(args):
+              title, body = args
+              return f"\\section*{{{title}}}\n{body}\n"
+
+          def render_frcontent(args):
+              first, second, third, fourth = args
+              parts = [f"\\textbf{{{first}}}"]
+              if second:
+                  parts.append(second)
+              if third:
+                  parts.append(third)
+              if fourth:
+                  parts.append(f"\\textit{{{fourth}}}")
+              return " \\\\\n".join(parts) + "\n\n"
+
+          source = expand_command(source, "csection", COMMAND_ARITY["csection"], render_csection)
+          source = expand_command(source, "frcontent", COMMAND_ARITY["frcontent"], render_frcontent)
+          source = expand_command(source, "clink", COMMAND_ARITY["clink"], lambda a: a[0])
+
+          source = re.sub(r"\\vspace\*?\{[^}]*\}", "", source)
+          source = re.sub(r"\\includegraphics(?:\[[^]]*\])?\{[^}]*\}", "", source)
+          source = re.sub(r"\n{3,}", "\n\n", source).strip()
+
+          cleaned = (
+              "\\documentclass[11pt]{article}\n"
+              "\\usepackage[margin=1in]{geometry}\n"
+              "\\usepackage{hyperref}\n"
+              "\\usepackage{graphicx}\n"
+              "\\usepackage[utf8]{inputenc}\n"
+              "\\begin{document}\n\n"
+              + source
+              + "\n\n\\end{document}\n"
+          )
+          out_tex.write_text(cleaned, encoding="utf-8")
+          out_title.write_text(page_title, encoding="utf-8")
+          PY
+
+          PAGE_TITLE="$(cat public/cv/title.txt)"
+          pandoc public/cv/main.cleaned.tex \
+            --from=latex \
+            --to=html5 \
+            --standalone \
+            --metadata title="$PAGE_TITLE" \
+            --output=public/cv/index.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
