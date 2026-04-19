@@ -26,10 +26,12 @@ if "\\begin{document}" in source and "\\end{document}" in source:
     source = source.rsplit("\\end{document}", 1)[0]
 
 source = re.sub(r"^(.*)%.*$", r"\1", source, flags=re.MULTILINE)
+source = re.sub(r"^&\s*$\n?", "", source, flags=re.MULTILINE)
 source = re.sub(title_re + ".*$\n?", "", source, flags=re.MULTILINE)
 source = source.replace("\\fontfamily{ppl}\\selectfont", "")
 source = source.replace("\\noindent", "")
 
+source = re.sub(r'\\begin\{tabularx\}.*\\end\{tabularx\}', lambda m: m.group().replace('\\newline', '\\\\'), source, flags=re.DOTALL)
 source = re.sub(r"^.*\\begin\{tabularx\}.*$\n?", "", source, flags=re.MULTILINE)
 source = re.sub(r"^.*\\end\{tabularx\}.*$\n?", "", source, flags=re.MULTILINE)
 source = source.replace("\\begin{center}", "")
