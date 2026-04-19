@@ -36,7 +36,7 @@ jobs:
           cp -r CV/images public/cv/
           python3 clean.py
 
-          pandoc public/cv/main.cleaned.tex \
+          pandoc public/cv/resume.cleaned.tex \
             --from=latex \
             --to=html5 \
             --standalone \
